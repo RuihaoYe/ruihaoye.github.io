@@ -1,0 +1,15 @@
+<article>
+  <div class="markdown"><h2 id="Vnode"><a href="#Vnode" class="headerlink" title="Vnode"></a>Vnode</h2><p>Properties:</p>
+<ul>
+<li>tag</li>
+<li>key</li>
+<li>attrs</li>
+<li>children</li>
+<li>dom: This property is undefined in the oninit lifecycle method.</li>
+<li>state: In closure components it is the object returned by the closure.</li>
+</ul>
+<h2 id="Lifecycle-Method"><a href="#Lifecycle-Method" class="headerlink" title="Lifecycle Method"></a>Lifecycle Method</h2><p>Component lifecycle methods are always run after the vnode’s corresponding method.</p>
+<p>oninit, oncreate, onbeforeupdate, onupdate, onbeforeremove, onremove</p>
+<h2 id="m-request"><a href="#m-request" class="headerlink" title="m.request"></a>m.request</h2><p>阻止redraw：<code>m.request(&quot;/api/v1/users&quot;, &#123;background: true&#125;).then(function() &#123;&#125;)</code></p>
+</div>
+</article>
