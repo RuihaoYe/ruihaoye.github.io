@@ -1,0 +1,60 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Types"><span class="markdown-toc-text">Types</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#Type-Assertion"><span class="markdown-toc-text">Type Assertion</span></a></li><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#Literal-Type"><span class="markdown-toc-text">Literal Type</span></a></li></ol></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#tsconfig"><span class="markdown-toc-text">tsconfig</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#Narrowing"><span class="markdown-toc-text">Narrowing</span></a></li></ol></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Modules"><span class="markdown-toc-text">Modules</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Function"><span class="markdown-toc-text">Function</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#%E6%8C%87%E6%98%8Efunction%E7%9A%84this"><span class="markdown-toc-text">指明function的this</span></a></li></ol></li></ol>
+<article>
+  <div class="markdown"><h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2><ul>
+<li>primitives: string, number, boolean, null, undefined</li>
+<li>Array: 判断是否是数组，<code>Array.isArray(x)</code></li>
+<li>any: can access properties of it, any property type is any</li>
+<li>function</li>
+<li>object</li>
+<li>union: 竖线分隔</li>
+<li>type alias: alias are <em>only aliases</em></li>
+<li>interface</li>
+</ul>
+<h3 id="Type-Assertion"><a href="#Type-Assertion" class="headerlink" title="Type Assertion"></a>Type Assertion</h3><p>type assertion信息编译后会消除。</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript">&#x2F;&#x2F; 支持两种形式的assertion
+const v1 &#x3D; v as number
+const v2 &#x3D; &lt;number&gt;v
+&#x2F;&#x2F; 经过两次assertion，转为任意类型
+const a &#x3D; (expr as any) an T
+
+&#x2F;&#x2F; 变量名后跟感叹号，表示non null check
+return a! * 10</code></pre>
+
+<h3 id="Literal-Type"><a href="#Literal-Type" class="headerlink" title="Literal Type"></a>Literal Type</h3><p>某个字符串，某个数值，就是literal type。</p>
+<h2 id="tsconfig"><a href="#tsconfig" class="headerlink" title="tsconfig"></a>tsconfig</h2><p>strictNullChecks</p>
+<h3 id="Narrowing"><a href="#Narrowing" class="headerlink" title="Narrowing"></a>Narrowing</h3><h4 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h4><p>可能的返回值: string, number, bigint, boolean, symbol, undefined, object(包含array, null), function，没有null</p>
+<h4 id="if"><a href="#if" class="headerlink" title="if"></a>if</h4><p>返回false的值：0, NaN, “”, 0n(bigint 0), null, undefined。</p>
+<p>可以适用<code>Boolean()</code>函数直接返回值的逻辑值。</p>
+<h4 id=""><a href="#" class="headerlink" title="=="></a>==</h4><p><code>== null</code>或者<code>== undefined</code>，等价于<code>=== null || === undeinfed</code></p>
+<h4 id="never"><a href="#never" class="headerlink" title="never"></a>never</h4><p>如果已经排除了所有可能，那么值类型会被判定为<code>never</code>。</p>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript">&#x2F;&#x2F; main export
+export default function helloWorld() &#123; ... &#125;
+&#x2F;&#x2F; 对应的import，名称可以不同
+import hello from &#39;.&#x2F;hello.js&#39;
+
+&#x2F;&#x2F; 不带default的export可以多次使用
+export var pi &#x3D; 3.14
+export function aa() &#123; ... &#125;
+&#x2F;&#x2F; renamed import
+import &#123; pi as p &#125; from &#39;.&#x2F;math.js&#39;
+
+&#x2F;&#x2F; export default和export可以混合使用
+export const pi &#x3D; 3.15
+export default function helloWorld() &#123; ... &#125;
+&#x2F;&#x2F; 
+import hello, &#123; pi as p &#125; from &#39;.&#x2F;math.js&#39;
+
+import 
+&#x2F;&#x2F; import all and rename
+import * as math from &#39;.&#x2F;math.js&#39;</code></pre>
+
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><h3 id="指明function的this"><a href="#指明function的this" class="headerlink" title="指明function的this"></a>指明function的this</h3><pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript">interface DB &#123;
+  filterUsers(filter: (this: User) &#x3D;&gt; boolean): User[]
+&#125;
+
+xx.filterUsers(function (this: User) &#123;
+  return this.admin
+&#125;)</code></pre>
+</div>
+</article>
+

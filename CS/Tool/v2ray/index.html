@@ -1,0 +1,211 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#cli"><span class="markdown-toc-text">cli</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="markdown-toc-text">客户端配置</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#sniffing"><span class="markdown-toc-text">sniffing</span></a></li></ol></li></ol>
+<article>
+  <div class="markdown"><h2 id="cli"><a href="#cli" class="headerlink" title="cli"></a>cli</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 检查配置文件
+v2ray -test -config &#x2F;usr&#x2F;local&#x2F;etc&#x2F;v2ray&#x2F;config.json</code></pre>
+
+<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><pre class="line-numbers language-json" data-language="json"><code class="language-json">&#123;
+  &quot;log&quot;: &#123;
+    &quot;loglevel&quot;: &quot;warning&quot;,
+    &quot;access&quot;: &quot;&#x2F;var&#x2F;log&#x2F;v2ray&#x2F;access.log&quot;,
+    &quot;error&quot;: &quot;&#x2F;var&#x2F;log&#x2F;v2ray&#x2F;error.log&quot;
+  &#125;,
+  &quot;dns&quot;: &#123;
+    &quot;hosts&quot;: &#123;
+      &quot;dns.google&quot;: &quot;8.8.8.8&quot;,
+      &quot;dns.pub&quot;: &quot;119.29.29.29&quot;,
+      &quot;dns.alidns.com&quot;: &quot;223.5.5.5&quot;,
+      &quot;geosite:category-ads-all&quot;: &quot;127.0.0.1&quot;
+    &#125;,
+    &quot;servers&quot;: [
+      &#123;
+        &quot;address&quot;: &quot;https:&#x2F;&#x2F;1.1.1.1&#x2F;dns-query&quot;,
+        &quot;domains&quot;: [
+          &quot;geosite:geolocation-!cn&quot;,
+          &quot;geosite:google@cn&quot;
+        ],
+        &quot;expectIPs&quot;: [
+          &quot;geoip:!cn&quot;
+        ]
+      &#125;,
+      &quot;8.8.8.8&quot;,
+      &#123;
+        &quot;address&quot;: &quot;114.114.114.114&quot;,
+        &quot;port&quot;: 53,
+        &quot;domains&quot;: [
+          &quot;geosite:cn&quot;,
+          &quot;geosite:icloud&quot;,
+          &quot;geosite:category-games@cn&quot;
+        ],
+        &quot;expectIPs&quot;: [
+          &quot;geoip:cn&quot;
+        ],
+        &quot;skipFallback&quot;: true
+      &#125;,
+      &#123;
+        &quot;address&quot;: &quot;localhost&quot;,
+        &quot;skipFallback&quot;: true
+      &#125;
+    ]
+  &#125;,
+  &quot;routing&quot;: &#123;
+    &quot;domainStrategy&quot;: &quot;IPIfNonMatch&quot;,
+    &quot;domainMatcher&quot;: &quot;mph&quot;,
+    &quot;rules&quot;: [
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Direct&quot;,
+        &quot;protocol&quot;: [
+          &quot;bittorrent&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Dns-Out&quot;,
+        &quot;inboundTag&quot;: [
+          &quot;Socks-In&quot;,
+          &quot;Http-In&quot;
+        ],
+        &quot;network&quot;: &quot;udp&quot;,
+        &quot;port&quot;: 53
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Reject&quot;,
+        &quot;domain&quot;: [
+          &quot;geosite:category-ads-all&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Proxy&quot;,
+        &quot;domain&quot;: [
+          &quot;full:www.icloud.com&quot;,
+          &quot;domain:icloud-content.com&quot;,
+          &quot;geosite:google&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Direct&quot;,
+        &quot;domain&quot;: [
+          &quot;geosite:tld-cn&quot;,
+          &quot;geosite:icloud&quot;,
+          &quot;geosite:category-games@cn&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Proxy&quot;,
+        &quot;domain&quot;: [
+          &quot;geosite:geolocation-!cn&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Direct&quot;,
+        &quot;domain&quot;: [
+          &quot;geosite:cn&quot;,
+          &quot;geosite:private&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Direct&quot;,
+        &quot;ip&quot;: [
+          &quot;geoip:cn&quot;,
+          &quot;geoip:private&quot;
+        ]
+      &#125;,
+      &#123;
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;Proxy&quot;,
+        &quot;network&quot;: &quot;tcp,udp&quot;
+      &#125;
+    ]
+  &#125;,
+  &quot;inbounds&quot;: [
+    &#123;
+      &quot;protocol&quot;: &quot;socks&quot;,
+      &quot;listen&quot;: &quot;0.0.0.0&quot;,
+      &quot;port&quot;: 1080,
+      &quot;tag&quot;: &quot;Socks-In&quot;,
+      &quot;settings&quot;: &#123;
+        &quot;ip&quot;: &quot;127.0.0.1&quot;,
+        &quot;udp&quot;: true,
+        &quot;auth&quot;: &quot;noauth&quot;
+      &#125;,
+      &quot;sniffing&quot;: &#123;
+        &quot;enabled&quot;: true,
+        &quot;destOverride&quot;: [
+          &quot;http&quot;,
+          &quot;tls&quot;
+        ]
+      &#125;
+    &#125;,
+    &#123;
+      &quot;protocol&quot;: &quot;http&quot;,
+      &quot;listen&quot;: &quot;0.0.0.0&quot;,
+      &quot;port&quot;: 1081,
+      &quot;tag&quot;: &quot;Http-In&quot;,
+      &quot;sniffing&quot;: &#123;
+        &quot;enabled&quot;: true,
+        &quot;destOverride&quot;: [
+          &quot;http&quot;,
+          &quot;tls&quot;
+        ]
+      &#125;
+    &#125;
+  ],
+  &quot;outbounds&quot;: [
+    &#123;
+      &quot;protocol&quot;: &quot;vmess&quot;,
+      &quot;settings&quot;: &#123;
+        &quot;vnext&quot;: [
+          &#123;
+            &quot;address&quot;: &quot;&quot;,
+            &quot;port&quot;: 11111,
+            &quot;users&quot;: [
+              &#123;
+                &quot;id&quot;: &quot;&quot;,
+                &quot;alterId&quot;: 8
+              &#125;
+            ]
+          &#125;
+        ]
+      &#125;,
+      &quot;tag&quot;: &quot;Proxy&quot;,
+      &quot;streamSettings&quot;: &#123;&#125;,
+      &quot;mux&quot;: &#123;&#125;
+    &#125;,
+    &#123;
+      &quot;protocol&quot;: &quot;dns&quot;,
+      &quot;tag&quot;: &quot;Dns-Out&quot;
+    &#125;,
+    &#123;
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;tag&quot;: &quot;Direct&quot;,
+      &quot;settings&quot;: &#123;
+        &quot;domainStrategy&quot;: &quot;UseIPv4&quot;
+      &#125;
+    &#125;,
+    &#123;
+      &quot;protocol&quot;: &quot;blackhole&quot;,
+      &quot;tag&quot;: &quot;Reject&quot;,
+      &quot;settings&quot;: &#123;
+        &quot;response&quot;: &#123;
+          &quot;type&quot;: &quot;http&quot;
+        &#125;
+      &#125;
+    &#125;
+  ]
+&#125;</code></pre>
+
+<h3 id="sniffing"><a href="#sniffing" class="headerlink" title="sniffing"></a>sniffing</h3><p>在客户端配置中有一个sniffing，意思是流量探测，根据指定的流量类型，重置所请求的目标。作用：</p>
+<ol>
+<li>解决 DNS 污染；</li>
+<li>对于 IP 流量可以应用后文提到的域名路由规则；</li>
+<li>识别 BT 协议，根据自己的需要拦截或者直连 BT 流量。</li>
+</ol>
+</div>
+</article>
+

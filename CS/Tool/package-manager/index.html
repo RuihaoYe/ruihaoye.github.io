@@ -1,0 +1,33 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#APT"><span class="markdown-toc-text">APT</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Maven"><span class="markdown-toc-text">Maven</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#NPM"><span class="markdown-toc-text">NPM</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#PNPM"><span class="markdown-toc-text">PNPM</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Yarn"><span class="markdown-toc-text">Yarn</span></a></li></ol>
+<article>
+  <div class="markdown"><h2 id="APT"><a href="#APT" class="headerlink" title="APT"></a>APT</h2><h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><h2 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查询当前镜像
+npm get registry
+# 设置为淘宝镜像
+npm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org&#x2F;</code></pre>
+
+<h2 id="PNPM"><a href="#PNPM" class="headerlink" title="PNPM"></a>PNPM</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查询当前镜像
+pnpm get registry
+# 设置为淘宝镜像
+pnpm config set registry https:&#x2F;&#x2F;registry.npm.taobao.org&#x2F;
+
+# 添加进dependencies
+pnpm add dep
+# 添加进devDependencies
+pnpm add -D dep
+# 添加进optionalDependencies
+pnpm add -O dep
+# 全局安装
+pnpm add --global dep
+
+# 移除依赖
+pnpm rm dep
+# 移除全局依赖
+pnpm rm --global dep</code></pre>
+
+<h2 id="Yarn"><a href="#Yarn" class="headerlink" title="Yarn"></a>Yarn</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查询当前镜像
+yarn config get registry
+# 设置为淘宝镜像
+yarn config set registry https:&#x2F;&#x2F;registry.npm.taobao.org&#x2F;</code></pre>
+</div>
+</article>
+

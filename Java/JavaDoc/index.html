@@ -1,0 +1,40 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Annotations"><span class="markdown-toc-text">Annotations</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Tags-order"><span class="markdown-toc-text">Tags order</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Basic-Command-Working-Examples"><span class="markdown-toc-text">Basic Command Working Examples</span></a></li></ol>
+<article>
+  <div class="markdown"><h2 id="Annotations"><a href="#Annotations" class="headerlink" title="Annotations"></a>Annotations</h2><pre class="line-numbers language-javadoc" data-language="javadoc"><code class="language-javadoc">&#x2F;&#x2F; Meta Annotations
+@author Jane Doe  
+@version v1.0-alpha  
+@since 2015-09-22
+
+&#x2F;&#x2F; Method Annotations
+@param parameter description
+@return parameter description
+@throws&#x2F;exception description
+
+&#x2F;&#x2F; Deprecated
+@deprecated deprecated-text(optional)  &#x2F;&#x2F; Ex: @deprecated since version v1.0
+
+&#x2F;&#x2F; Linking
+@see reference &#x2F;&#x2F; Ex: @see package.ClassA&#x2F;url&#x2F;string
+&#123;@link package.class#member label&#125; &#x2F;&#x2F; Ex: &#123;@link URL&#125;&#x2F;&#123;@link ImageObserver&#125; This is descriptive text  
+@serial&#x2F;serialField&#x2F;serialData &#x2F;&#x2F; Ex: @serialField Field1  </code></pre>
+
+<h2 id="Tags-order"><a href="#Tags-order" class="headerlink" title="Tags order"></a>Tags order</h2><p>Add the tags in the following order :  </p>
+<pre class="line-numbers language-javadoc" data-language="javadoc"><code class="language-javadoc">@author (classes and interfaces)  
+@version (classes and interfaces)  
+@param (methods and constructors)  
+@return (methods)  
+@exception (@throws from Javadoc 1.2)  
+@see (If multiple @see, then order according to distance from current file)  
+@since (Follow format throughout document)  
+@serial (or @serialField or @serialData)  
+@deprecated (see How and When To Deprecate APIs)  </code></pre>
+
+<h2 id="Basic-Command-Working-Examples"><a href="#Basic-Command-Working-Examples" class="headerlink" title="Basic Command Working Examples"></a>Basic Command Working Examples</h2><ol>
+<li>javadoc AddAcc.java : Simply creates Javadoc file in the same directory.</li>
+<li>javadoc -d doc BankAcc.java : creates Javadoc files for the specified file in same directory in specified folder doc.</li>
+<li>javadoc -d doc bankpackage/*.java : Javadoc files for complete package created in doc folder in current directory.</li>
+<li>javadoc -tag newTag. : a : “New Tag: “ -d doc BankAcc.java : For adding new custom tag in documentation for either specified file or package.</li>
+</ol>
+</div>
+</article>
+

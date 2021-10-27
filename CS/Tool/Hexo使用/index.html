@@ -1,0 +1,53 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="markdown-toc-text">基本命令</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#tag-plugins"><span class="markdown-toc-text">tag plugins</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#%E5%BC%95%E5%85%A5%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6"><span class="markdown-toc-text">引入代码文件</span></a></li></ol></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Theme"><span class="markdown-toc-text">Theme</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#Layout-file"><span class="markdown-toc-text">Layout file</span></a></li><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#Variables"><span class="markdown-toc-text">Variables</span></a></li></ol></li></ol>
+<article>
+  <div class="markdown"><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># new
+hexo new [layout](post, page, draft) &lt;title&gt;
+
+# generate
+hexo [-d](deploy after generation finishes) generate
+
+# public
+hexo publish [layout] &lt;filename&gt;
+
+# server
+hexo [-p port] [-s](only server static files) [-l](enable logger) server
+
+# deploy
+hexo [-g](generate before deployment)deploy
+
+# render
+hexo render [-o](output destination) &lt;file1&gt; [file2] ...
+
+# clean: Cleans the cache file (db.json) and generated files (public).
+hexo clean
+
+# list
+hexo list &lt;type&gt;(page, post, route, tag, category)
+
+# version
+hexo version
+
+# 其他参数
+# disalbes loading plugins and scripts
+hexo --safe
+# debug mode
+hexo --debug</code></pre>
+
+<h2 id="tag-plugins"><a href="#tag-plugins" class="headerlink" title="tag plugins"></a>tag plugins</h2><h3 id="引入代码文件"><a href="#引入代码文件" class="headerlink" title="引入代码文件"></a>引入代码文件</h3><p>通过<code>code_dir</code>设置代码文件目录为<code>source/:code_dir</code>，支持设置引入行数。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">&#123;% include_code [title] [lang:language] [from:line] [to:line] path&#x2F;to&#x2F;file %&#125;</code></pre>
+
+<h2 id="Theme"><a href="#Theme" class="headerlink" title="Theme"></a>Theme</h2><p>文件结构：</p>
+<ul>
+<li>layout</li>
+<li>source</li>
+<li>_config.yml</li>
+</ul>
+<h3 id="Layout-file"><a href="#Layout-file" class="headerlink" title="Layout file"></a>Layout file</h3><h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><ul>
+<li>site: site wide information</li>
+<li>page: information related to the current page</li>
+<li>config: blog’s <code>_config.yml</code></li>
+<li>theme: theme’s <code>_config.yml</code></li>
+</ul>
+</div>
+</article>
+

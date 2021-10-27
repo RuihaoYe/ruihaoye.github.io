@@ -1,0 +1,63 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="markdown-toc-text">存储过程模板</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#DDL"><span class="markdown-toc-text">DDL</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#identity%E5%AD%97%E6%AE%B5"><span class="markdown-toc-text">identity字段</span></a></li></ol></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#%E5%AD%97%E6%AE%B5%E6%B3%A8%E9%87%8A%E6%AD%A3%E5%88%99%E6%9B%BF%E6%8D%A2"><span class="markdown-toc-text">字段注释正则替换</span></a></li></ol>
+<article>
+  <div class="markdown"><h2 id="存储过程模板"><a href="#存储过程模板" class="headerlink" title="存储过程模板"></a>存储过程模板</h2><pre class="line-numbers language-sql" data-language="sql"><div class="caption"><span>DB2-procedure-template.sql</span><a href="/code/DB2-procedure-template.sql">view raw</a></div><code class="language-sql">BEGIN -- 声明异常处理变量
+DECLARE SQLCODE INTEGER DEFAULT 0;
+DECLARE SQLSTATE CHAR(5) DEFAULT ’ 00000 ’;
+DECLARE V_PROCEDURE_NAME VARCHAR(25) DEFAULT &#39;SJCK.SOME_PROCEDURE_NAME&#39;;
+DECLARE V_MSG VARCHAR(512);
+DECLARE V_RET INTEGER;
+-- 声明存储过程使用变量
+DECLARE SQL VARCHAR(10000);
+DECLARE STEP INTEGER DEFAULT 0;
+DECLARE DATE_CURRENT VARCHAR(10);
+-- 当前日期，格式为YYYYMMDD
+-- 设置变量值
+SET
+  DATE_CURRENT &#x3D; TO_CHAR(CURRENT DATE, &#39;YYYYMMDD&#39;);
+-- 抛异常
+DECLARE EXIT HANDLER FOR SQLEXCEPTION BEGIN
+VALUES
+(
+    &#39;存储过错&#39; || V_PROCEDURE_NAME || &#39;调用失败，在步骤&#39; || CHAR(STEP) || &#39;结束。&#39; || &#39;SQLCode: &#39; || RTRIM(CHAR(SQLCODE)) || &#39;; SQLState: &#39; || CHAR(SQLSTATE)
+  ) INTO V_MSG;
+SET
+  V_RET &#x3D; -1;
+END;
+-- 1 BALABALA
+SET
+  SQL &#x3D; &#39;SOME SQL STATEMENT&#39;;
+EXECUTE IMMEDIATE SQL;
+COMMIT;
+SET
+  STEP &#x3D; 1;
+-- 2 BALABALA
+-- 结束设置
+SET
+  V_RET &#x3D; 0;
+SET
+  V_MSG &#x3D; V_PROCEDURE_NAME || &#39; Finished!&#39;;
+END</code></pre>
+
+<h2 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h2><h3 id="identity字段"><a href="#identity字段" class="headerlink" title="identity字段"></a>identity字段</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- create
+CREATE TABLE ORDERS
+   (ORDERNO SMALLINT NOT NULL
+   GENERATED ALWAYS AS IDENTITY
+   (START WITH 500 
+   INCREMENT BY 1 
+   CYCLE),
+   SHIPPED_TO VARCHAR (36) ,
+   ORDER_DATE DATE);
+-- alter
+ALTER TABLE ORDER         
+  ALTER COLUMN ORDERNO         
+  RESTART WITH 1;</code></pre>
+
+<h2 id="字段注释正则替换"><a href="#字段注释正则替换" class="headerlink" title="字段注释正则替换"></a>字段注释正则替换</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">CREATE_BY VARCHAR(255) NOT NULL, -- 创建人
+
+COMMENT ON COLUMN XX.XX_TABLE.CREATE_BY IS &#39;创建人&#39;;
+
+-- 正则：(\w+)[\w\s,\&#39;()]+-- (.+)
+-- 替换值：COMMENT ON COLUMN XX.XX_TABLE.$1 IS &#39;$2&#39;;</code></pre>
+</div>
+</article>
+

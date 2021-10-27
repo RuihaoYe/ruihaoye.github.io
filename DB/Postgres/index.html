@@ -1,0 +1,20 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Query"><span class="markdown-toc-text">Query</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#cost"><span class="markdown-toc-text">cost</span></a></li></ol></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Concurrency-Control"><span class="markdown-toc-text">Concurrency Control</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#psql"><span class="markdown-toc-text">psql</span></a><ol class="markdown-toc-child"><li class="markdown-toc-item markdown-toc-level-3"><a class="markdown-toc-link" href="#meta-commands"><span class="markdown-toc-text">meta-commands</span></a></li></ol></li></ol>
+<article>
+  <div class="markdown"><h2 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h2><h3 id="cost"><a href="#cost" class="headerlink" title="cost"></a>cost</h3><p>three kinds of costs: start-up, run and total. EXPLAIN command show start-up and total cost.</p>
+<ul>
+<li>start-up: cost expended before the first tuple is fetched;</li>
+<li>run: cost to fetch all tuples;</li>
+<li>total: start-up + run.</li>
+</ul>
+<h2 id="Concurrency-Control"><a href="#Concurrency-Control" class="headerlink" title="Concurrency Control"></a>Concurrency Control</h2><p>基本类型有三种：1. Multi-version Concurrency Control(MVCC) 2. Strict Two-Phase Locking(S2PL) 3. Optimistic Concurrency Control(OCC)。Postgres使用了MVCC的变种Snapshot Isolation(SI)。</p>
+<h2 id="psql"><a href="#psql" class="headerlink" title="psql"></a>psql</h2><h3 id="meta-commands"><a href="#meta-commands" class="headerlink" title="meta-commands"></a>meta-commands</h3><p><code>S</code>表示包含System Object，<code>+</code>表示展示更多信息。</p>
+<ul>
+<li>\db[+] [pattern]: List tablespace.</li>
+<li>\dEimstv[S+] [pattern]: List foreign table, index, materialized view, sequence, table, view.</li>
+<li>\df[anptwS+] [pattern]: List functions. [anptw]表示function类型。</li>
+<li>\dg[S+] [pattern]: List database roles.</li>
+<li>\dn[S+] [pattern]: List schemas(namespace).</li>
+</ul>
+</div>
+</article>
+

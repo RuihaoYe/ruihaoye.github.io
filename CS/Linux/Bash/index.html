@@ -1,0 +1,102 @@
+<ol class="markdown-toc"><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#Kill%E8%84%9A%E6%9C%AC"><span class="markdown-toc-text">Kill脚本</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#File-amp-Disk"><span class="markdown-toc-text">File &amp; Disk</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#locale"><span class="markdown-toc-text">locale</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#lsof"><span class="markdown-toc-text">lsof</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#nc-netcat"><span class="markdown-toc-text">nc(netcat)</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#netstat"><span class="markdown-toc-text">netstat</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#open-xdg-open-explorer"><span class="markdown-toc-text">open, xdg-open, explorer</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#rsync"><span class="markdown-toc-text">rsync</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#ssh"><span class="markdown-toc-text">ssh</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#su-amp-sudo"><span class="markdown-toc-text">su &amp; sudo</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#systemd"><span class="markdown-toc-text">systemd</span></a></li><li class="markdown-toc-item markdown-toc-level-2"><a class="markdown-toc-link" href="#tar"><span class="markdown-toc-text">tar</span></a></li></ol>
+<article>
+  <div class="markdown"><h2 id="Kill脚本"><a href="#Kill脚本" class="headerlink" title="Kill脚本"></a>Kill脚本</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">PROCESS_NAME&#x3D;&#39;&#39;
+PROCESS&#x3D;&#96;ps -ef|grep $PROCESS_NAME|grep -v grep|grep -v PPID|awk &#39;&#123;print $2&#125;&#39;&#96;
+for i in $PROCESS
+do
+  echo &quot;Kill the $PROCESS_NAME process [ $i ]&quot;
+  kill -9 $i
+done</code></pre>
+
+<h2 id="File-amp-Disk"><a href="#File-amp-Disk" class="headerlink" title="File &amp; Disk"></a>File &amp; Disk</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看该路径每个父文件夹的权限信息
+namei -l &#x2F;some&#x2F;path
+
+# df： 查看磁盘
+df -h
+
+# du: 查看当前目录每个文件和文件夹大小
+du -h -d 1 # d means depth</code></pre>
+
+<h2 id="locale"><a href="#locale" class="headerlink" title="locale"></a>locale</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 临时改locale
+export LC_ALL&#x3D;zh_CN.utf8</code></pre>
+
+<h2 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看所有打开的文件或指定文件
+lsof [file1] [file2]
+# 查看用户、用户组打开的文件
+lsof -u [user1,user2] -g [group id]
+# 查看某程序打开的文件
+lsof -c [process]
+# 网络连接
+lsof -i [tcp, udp]
+lsof -i :25
+# NFS文件、unix domain socket file
+lsof [-N] [-U]</code></pre>
+
+<h2 id="nc-netcat"><a href="#nc-netcat" class="headerlink" title="nc(netcat)"></a>nc(netcat)</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 监听某端口
+nc -l
+# 手动发送报文到机器端口
+echo &quot;abcdefg&quot; | nc 172.0.0.1 12222</code></pre>
+
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># 查看活动端口
+netstat -ntlp</code></pre>
+
+<h2 id="open-xdg-open-explorer"><a href="#open-xdg-open-explorer" class="headerlink" title="open, xdg-open, explorer"></a>open, xdg-open, explorer</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"># On MacOS
+open $(bundle show minima)
+# On Windows
+explorer &#x2F;usr&#x2F;local&#x2F;lib&#x2F;ruby&#x2F;gems&#x2F;2.3.0&#x2F;gems&#x2F;minima-2.1.0
+# On Linux
+xdg-open $(bundle show minima)</code></pre>
+
+<h2 id="rsync"><a href="#rsync" class="headerlink" title="rsync"></a>rsync</h2><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">rsync -avHPS rsync:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;epel&#x2F; .&#x2F;
+# -a: 相当于-rlptgoD
+# -v: 输出信息
+# -H: preserve hard link
+# -P: 相当于--partial --progress
+# -S: handle sparse files efficiently
+# --bwlimit&#x3D;KBPS: 限速，Kbps</code></pre>
+
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h2><p>通过证书登录：参考<code>http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 生成证书
+# 如果一路回车默认生成id_rsa和id_rsa.pub，前者是私钥，放在客户端，后者是公钥，需要放在ssh服务器
+ssh-keygen -t rsa
+# 设置服务端
+scp id_rsa.pub username@1.1.1.1:~&#x2F;.ssh&#x2F;
+ssh username@1.1.1.1 &quot;cat ~&#x2F;id_rsa.pub &gt;&gt; ~&#x2F;.ssh&#x2F;authorized_keys&quot;</code></pre>
+
+<h2 id="su-amp-sudo"><a href="#su-amp-sudo" class="headerlink" title="su &amp; sudo"></a>su &amp; sudo</h2><p>su(substitute user)会在当前的shell里登录默认root账号，也可以在su后跟想要登录的用户名。su会保持原来的环境变量和pwd，在su后加<code>-</code>会使用登录账号的环境变量和pwd。</p>
+<p>sudo会使用root的环境变量，可以加<code>-E</code>来使用原用户的环境变量。使用visudo来修改<code>/etc/sudoers</code></p>
+<h2 id="systemd"><a href="#systemd" class="headerlink" title="systemd"></a>systemd</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 查看日志
+journalctl -u unit-name --since &quot;2018-08-30 14:10:10&quot; --until &quot;2018-09-02 12:05:50&quot; -f</code></pre>
+
+<h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"># 解压tar包
+tar –xvf file.tar
+# 解压tar.gz
+tar -xzvf file.tar.gz
+#  解压rar
+unrar e file.rar
+# 解压zip
+unzip file.zip
+# 将目录里所有jpg文件打包成tar.jpg
+tar –cvf jpg.tar *.jpg
+# 将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩
+tar –czf jpg.tar.gz *.jpg</code></pre>
+
+<p><strong>必选</strong>:</p>
+<ul>
+<li>c: 建立压缩档案</li>
+<li>x：解压</li>
+<li>t：查看内容</li>
+<li>r：向压缩归档文件末尾追加文件</li>
+<li>u：更新原压缩包中的文件<br>以上五个命令中必选一个。</li>
+</ul>
+<p><strong>参数</strong>:</p>
+<ul>
+<li>z：有gzip属性的</li>
+<li>j：有bz2属性的</li>
+<li>Z：有compress属性的</li>
+<li>v：显示所有过程</li>
+<li>O：将文件解开到标准输出</li>
+</ul>
+</div>
+</article>
+
